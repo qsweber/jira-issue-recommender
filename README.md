@@ -10,7 +10,7 @@ Adds a comment to new tickets with links to related tickets.
 
     jira-issue-recommender \
         --jira-server-url 'https://jira.example.com/' \
-        --username quinn \
+        --username **** \
         --password **** \
         --finished-issues-query 'status = Done and timespent > 0' \
         --new-issues-query 'status = "To Do" and timeestimate is null' \
