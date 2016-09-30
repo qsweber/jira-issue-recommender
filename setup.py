@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='jira_issue_recommender',
     packages=['jira_issue_recommender'],
-    version='0.0.1',
+    version='0.0.2',
     description='Find related issues',
     author='Quinn Weber',
     author_email='quinn@quinnweber.com',
