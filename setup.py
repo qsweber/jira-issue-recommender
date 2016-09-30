@@ -1,14 +1,15 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='jira-issue-recommender',
+    name='jira_issue_recommender',
+    packages=['jira_issue_recommender'],
     version='0.0.1',
     description='Find related issues',
     author='Quinn Weber',
+    author_email='quinn@quinnweber.com',
     maintainer='Quinn Weber',
     maintainer_email='quinn@quinnweber.com',
-    url='',
-    packages=find_packages(exclude=('tests',)),
+    url='https://github.com/qsweber/jira-issue-recommender',
     install_requires=(
         'jira',
         'HTMLParser',
