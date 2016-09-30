@@ -3,7 +3,7 @@ import sys
 
 from jira import JIRA
 
-from jira_issue_recommender.util import get_issues, get_issues_tfidf, get_most_similar
+from jira_issue_recommender.util import get_comment, get_issues, get_issues_tfidf, get_most_similar
 
 
 def main(argv=None):
@@ -47,7 +47,7 @@ def main(argv=None):
     parser.add_argument(
         '--comment-preface',
         help='String added to beginning of recommendations comment',
-        required=False,
+        required=True,
     )
 
     cli_args = parser.parse_args(argv)
@@ -63,25 +63,15 @@ def main(argv=None):
     for issue_key in new_issues.keys():
         similar = get_most_similar(issue_key, all_issues, new_issues, tfidf)
 
-        new_comment = '{}\n{}'.format(
-            cli_args.comment_preface,
-            '\n'.join([
-                '{} {} - {} hours'.format(key, info['title'], round((info['timespent'] or 0) / 60.0 / 60.0, 1))
-                for key, info in similar.items()
-            ])
-        )
+        new_comment = get_comment(cli_args.comment_preface, similar)
 
         existing_comments = [comment for comment in client.comments(issue_key) if comment.body.startswith(cli_args.comment_preface)]
         if len(existing_comments) > 0:
             if len(existing_comments) == 1:
                 existing_comment = existing_comments[0]
-                if existing_comment.body == new_comment:
-                    print('skipping {}'.format(issue_key))
+                if sorted(new_comment.split('\n')) == sorted(existing_comment.body.split('\n')): # we don't need to change the order
                     continue
                 else:
-                    import ipdb
-                    ipdb.set_trace()
-                    print('deleting {}'.format(issue_key))
                     existing_comment.delete()
             else:
                 raise Exception('more than one comment was added to {}. this should not happen!'.format(issue_key))

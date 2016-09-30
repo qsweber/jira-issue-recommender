@@ -79,8 +79,18 @@ def get_most_similar(issue_key, all_issues, new_issues, tfidf):
     most_similar = indicies[:-5:-1]
     most_similar_keys = itemgetter(*most_similar)(list(all_issues.keys()))
 
-    return {
-        issue_key: info
-        for issue_key, info in all_issues.items()
-        if issue_key in most_similar_keys
-    }
+    return [
+        (key, info)
+        for key, info in all_issues.items()
+        if key in most_similar_keys
+    ]
+
+
+def get_comment(comment_preface, issues):
+    return '{}\n{}'.format(
+        comment_preface,
+        '\n'.join([
+            '{} {} - {} hours'.format(key, info['title'], round((info['timespent'] or 0) / 3600.0, 1))
+            for key, info in issues
+        ])
+    )
