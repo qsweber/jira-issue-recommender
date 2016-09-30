@@ -14,6 +14,7 @@ setup(
         'jira',
         'HTMLParser',
         'scikit-learn',
+        'scipy'
     ),
     entry_points={
         'console_scripts': (
