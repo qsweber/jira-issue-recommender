@@ -35,6 +35,8 @@ Let us start with this document:
 The term-frequency representation of this document is:
 
     {'the': 3, 'dog': 1, 'and': 1, 'cat': 1, 'live': 1, 'in': 1, 'house': 1}
+
+
    
 #### inverse document frequency (idf)
 
@@ -66,3 +68,7 @@ The euclidian distance between documents can be found with the following psuedoc
             distance[(index_outer, index_inner)] = tfidf[index_outer] * tfidf[index_inner]
 
 We take it one step further and use the cosine distance, which essentially just normalizes for document length.
+
+## TODO
+
+- Since each added comment on JIRA generates an email, we could require the user to respond to an input like "This will generate 34 emails. Confirm by typing '34': "
